@@ -35,7 +35,7 @@ def get_tab_widget():
 
     tabs.addTab(CombiGen(), "CombiGen")
     tabs.addTab(ScriptEditor(), "Script Editor")
-    tabs.addTab(OutputGenerator(), "Output SMILES")
+    tabs.addTab(OutputGenerator(), "Output SMIRKS")
     return tabs
 
 
