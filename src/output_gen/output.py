@@ -1,14 +1,15 @@
+import csv
+import random
 import subprocess
 
 from PyQt6.QtCore import Qt, QTimer
 from PyQt6.QtGui import QTextCursor
 from PyQt6.QtWidgets import QPushButton, QVBoxLayout, QWidget, QTextEdit
 
-from src.combi_gen.generic_widgets import TextEntryWidget
-from src.config.constants import F, OUTPUT_PATH, SCRIPT_PATH
-from src.config.stylesheet import gen_button_ss, section_ss, terminal_ss
-from src.script_gen.data_fields import TextEntryHandler
-from src.script_gen.script_gen import ScriptGenerator
+from combi_gen.generic_widgets import TextEntryWidget
+from config.constants import F, TXT_PATH, SCRIPT_PATH, CSV_PATH
+from config.stylesheet import gen_button_ss, section_ss, terminal_ss
+from script_gen.data_fields import TextEntryHandler
 
 
 class OutputGenerator(QWidget):
@@ -52,20 +53,35 @@ class RunButton(QPushButton):
 
     def run_script(self):
         lines = SCRIPT_PATH.read_text(encoding="utf-8").splitlines()
-        if len(lines) >= 22:
-            lines[-3] = f"\tif random.random() < {TextEntryHandler.DATA["output_proportion"]}:"
-            SCRIPT_PATH.write_text("\n".join(lines), encoding="utf-8")
+        if len(lines) < 22:
+            return
 
+        lines[-3] = f"\tif random.random() <= 1:"
+        SCRIPT_PATH.write_text("\n".join(lines), encoding="utf-8")
         output = subprocess.run(["python", SCRIPT_PATH], capture_output=True, text=True)
-        with open(OUTPUT_PATH, "w") as f:
-            f.write(output.stdout)
+        output_lines = output.stdout.splitlines()
+
+        with open(CSV_PATH, "w", encoding="utf-8", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(["SMILES Labelled"])
+            for line in output_lines[:-1]:
+                writer.writerow([line])
+
+        output_proportion = TextEntryHandler.DATA["output_proportion"]
+        selected = [line for line in output_lines if random.random() < output_proportion]
+        with open(TXT_PATH, "w", encoding="utf-8") as f:
+            f.writelines(f"{line}\n" for line in selected)
+            f.write(output_lines[-1])
             f.write(output.stderr)
+
+        lines[-3] = f"\tif random.random() < {output_proportion}:"
+        SCRIPT_PATH.write_text("\n".join(lines), encoding="utf-8")
 
 
 class OutputTerminal(QWidget):
     def __init__(self):
         super().__init__()
-        self.last_text = OUTPUT_PATH.read_text(encoding="utf-8", errors="ignore")
+        self.last_text = TXT_PATH.read_text(encoding="utf-8", errors="ignore")
 
         self.text_edit = QTextEdit()
         self.text_edit.setReadOnly(True)
@@ -83,7 +99,7 @@ class OutputTerminal(QWidget):
         self.timer.start(500)
 
     def display_output(self):
-        text = OUTPUT_PATH.read_text(encoding="utf-8", errors="ignore")
+        text = TXT_PATH.read_text(encoding="utf-8", errors="ignore")
         if text != self.last_text:
             self.last_text = text
             self.text_edit.setPlainText(text)

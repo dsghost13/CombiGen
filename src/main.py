@@ -1,12 +1,13 @@
 import sys
 
+import qdarktheme
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QApplication, QHBoxLayout, QMainWindow, QTabWidget, QVBoxLayout, QWidget
 
-from src.config.constants import E
-from src.combi_gen.main_ui import CombiGen
-from src.output_gen.output import OutputGenerator
-from src.script_gen.script_editor import ScriptEditor
+from config.constants import E
+from combi_gen.main_ui import CombiGen
+from output_gen.output import OutputGenerator
+from script_gen.script_editor import ScriptEditor
 
 
 class MainWindow(QMainWindow):
@@ -40,6 +41,7 @@ def get_tab_widget():
 
 def main():
     app = QApplication(sys.argv)
+    app.setPalette(qdarktheme.load_palette(theme="dark"))
 
     window = MainWindow()
     window.show()

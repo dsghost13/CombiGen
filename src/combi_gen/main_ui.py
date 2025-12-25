@@ -1,13 +1,13 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QLabel, QPushButton, QScrollArea, QVBoxLayout, QWidget, QMessageBox
 
-from src.combi_gen.generic_widgets import TextEntryWidget
-from src.combi_gen.pareto import ParetoWidget
-from src.combi_gen.reactant import ReactantWidget
-from src.config.constants import F, P
-from src.config.stylesheet import gen_button_ss, scroll_area_ss, section_ss
-from src.script_gen.data_fields import TextEntryHandler
-from src.script_gen.script_gen import ScriptGenerator
+from combi_gen.generic_widgets import TextEntryWidget
+from combi_gen.pareto import ParetoWidget
+from combi_gen.reactant import ReactantWidget
+from config.constants import F, P
+from config.stylesheet import gen_button_ss, scroll_area_ss, section_ss
+from script_gen.data_fields import TextEntryHandler
+from script_gen.script_gen import ScriptGenerator
 
 
 class CombiGen(QScrollArea):
@@ -98,10 +98,13 @@ class GenerateButton(QWidget):
     def generate_script(self):
         if not TextEntryHandler.DATA["source_cores"]:
             WarningMessageBox("Source core(s) not found!").exec()
+            return
         if not TextEntryHandler.DATA["sink_cores"]:
-            WarningMessageBox("Sink cores not found!").exec()
+            WarningMessageBox("Sink core(s) not found!").exec()
+            return
         if not TextEntryHandler.DATA["arrow_pushing"]:
             WarningMessageBox("Arrow pushing not found!").exec()
+            return
         ScriptGenerator.generate_script()
 
 

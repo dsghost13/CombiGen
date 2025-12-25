@@ -10,7 +10,8 @@ P = QSizePolicy.Policy.Preferred
 # file paths
 PROJECT_DIR = Path(__file__).resolve().parents[2]
 SCRIPT_PATH = PROJECT_DIR / "script.py"
-OUTPUT_PATH = PROJECT_DIR / "output"
+TXT_PATH = PROJECT_DIR / "output.txt"
+CSV_PATH = PROJECT_DIR / "output.csv"
 
 # colors
 COLORS = {

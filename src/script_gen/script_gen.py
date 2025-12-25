@@ -1,5 +1,5 @@
-from src.config.constants import SCRIPT_PATH
-from src.script_gen.data_fields import TextEntryHandler
+from config.constants import SCRIPT_PATH
+from script_gen.data_fields import TextEntryHandler
 
 
 class ScriptGenerator:
@@ -22,7 +22,7 @@ class ScriptGenerator:
         f.write("import random\n\n")
         if TextEntryHandler.DATA["pareto_fronts"]:
             f.write("import pandas as pd\n\n")
-        f.write("from src.script_gen.chemtools import SmirksGenerator\n\n\n")
+        f.write("from script_gen.chemtools import SmirksGenerator\n\n\n")
 
     @staticmethod
     def write_reactant(f, reactant_type):

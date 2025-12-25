@@ -1,7 +1,8 @@
-from src.config.constants import COLORS as C
+from config.constants import COLORS as C
 
 add_button_ss =     f"""
                     QPushButton {{
+                        color: white;
                         background-color: {C["DARK_GRAY"]};
                         border-color: {C["WHITE"]};
                         border-style: solid;
@@ -15,6 +16,7 @@ add_button_ss =     f"""
 
 del_button_ss =     f"""
                     QPushButton {{
+                        color: white;
                         background-color: {C["DARK_GRAY"]};
                         border-color: {C["WHITE"]};
                         border-radius: 10px;
@@ -42,6 +44,7 @@ dropdown_ss =       f"""
 
 gen_button_ss =     f"""
                     QPushButton {{
+                        color: white;
                         background-color: {C["LIGHT_BLUE"]};
                         border-color: {C["WHITE"]};
                         border-radius: 10px;

@@ -1,8 +1,8 @@
 from PyQt6.QtWidgets import QHBoxLayout, QLabel, QLineEdit, QPushButton, QWidget
 
-from src.config.constants import F
-from src.script_gen.data_fields import TextEntryHandler
-from src.config.stylesheet import add_button_ss, del_button_ss, text_entry_ss
+from config.constants import F
+from script_gen.data_fields import TextEntryHandler
+from config.stylesheet import add_button_ss, del_button_ss, text_entry_ss
 
 
 class TextEntryWidget(QWidget):
