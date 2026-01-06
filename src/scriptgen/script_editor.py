@@ -42,8 +42,10 @@ class ScriptEditor(QsciScintilla):
 
     def load_file(self):
         self._internal_update = True
+        line, index = self.getCursorPosition()
         with open(SCRIPT_PATH, "r", encoding="utf-8") as f:
             self.setText(f.read())
+        self.setCursorPosition(line, index)
         self._internal_update = False
 
     def file_changed(self, path):
