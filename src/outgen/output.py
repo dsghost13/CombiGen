@@ -6,10 +6,10 @@ from PyQt6.QtCore import Qt, QTimer
 from PyQt6.QtGui import QTextCursor
 from PyQt6.QtWidgets import QPushButton, QVBoxLayout, QWidget, QTextEdit
 
-from combi_gen.generic_widgets import TextEntryWidget
+from combigen.generic_widgets import TextEntryWidget
 from config.constants import F, TXT_PATH, SCRIPT_PATH, CSV_PATH
 from config.stylesheet import gen_button_ss, section_ss, terminal_ss
-from script_gen.data_fields import TextEntryHandler
+from scriptgen.data_fields import TextEntryHandler
 
 
 class OutputGenerator(QWidget):

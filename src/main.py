@@ -5,9 +5,9 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QApplication, QHBoxLayout, QMainWindow, QTabWidget, QVBoxLayout, QWidget
 
 from config.constants import E
-from combi_gen.main_ui import CombiGen
-from output_gen.output import OutputGenerator
-from script_gen.script_editor import ScriptEditor
+from combigen.main_ui import CombiGen
+from outgen.output import OutputGenerator
+from scriptgen.script_editor import ScriptEditor
 
 
 class MainWindow(QMainWindow):

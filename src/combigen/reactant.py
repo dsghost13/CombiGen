@@ -1,9 +1,9 @@
 from PyQt6.QtWidgets import QHBoxLayout, QVBoxLayout
 from PyQt6.QtWidgets import QLabel, QLineEdit, QWidget
 
-from combi_gen.generic_widgets import DeleteButton, AddButton, TextEntryWidget
+from combigen.generic_widgets import DeleteButton, AddButton, TextEntryWidget
 from config.constants import F, P
-from script_gen.data_fields import TextEntryHandler
+from scriptgen.data_fields import TextEntryHandler
 from config.stylesheet import section_ss, text_entry_ss
 
 

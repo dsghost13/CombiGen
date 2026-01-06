@@ -3,10 +3,10 @@ from PyQt6.QtGui import QColor, QPainter, QPen, QPolygon
 from PyQt6.QtWidgets import QGridLayout, QHBoxLayout, QVBoxLayout
 from PyQt6.QtWidgets import QComboBox, QLabel, QListView, QPushButton, QWidget
 
-from combi_gen.reactant import AddButton, DeleteButton
+from combigen.reactant import AddButton, DeleteButton
 from config.constants import COLORS as C
 from config.constants import F, P
-from script_gen.data_fields import TextEntryHandler
+from scriptgen.data_fields import TextEntryHandler
 from config.stylesheet import dropdown_ss, pareto_axis_ss, pareto_cell_ss, section_ss
 
 

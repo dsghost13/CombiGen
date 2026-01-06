@@ -173,7 +173,7 @@ class SmirksGenerator:
                         reactants_editable.AddBond(index1, index2, order=Chem.rdchem.BondType.QUADRUPLE)
                     elif sink_bond.GetBondTypeAsDouble() == 4.0:
                         print("ERROR, TRYING TO ADD A BOND ORDER TO A BOND ORDER OF 4!!!")
-                        raise RuntimeError("Error - trying yo add to a bond order of 4 for the sink atom") from None
+                        raise RuntimeError("Error - trying to add to a bond order of 4 for the sink atom") from None
                     else:
                         print("Error - unaccounted for bond order in atom mapping code sink")
                         raise RuntimeError("Error - unaccounted for bond order in atom mapping code sink") from None

@@ -1,5 +1,5 @@
 from config.constants import SCRIPT_PATH
-from script_gen.data_fields import TextEntryHandler
+from scriptgen.data_fields import TextEntryHandler
 
 
 class ScriptGenerator:
@@ -8,6 +8,7 @@ class ScriptGenerator:
         try:
             with open(SCRIPT_PATH, "w") as f:
                 ScriptGenerator.write_imports(f)
+                ScriptGenerator.write_notes(f)
                 ScriptGenerator.write_reactant(f, "source")
                 ScriptGenerator.write_reactant(f, "sink")
                 ScriptGenerator.write_linkers(f)
@@ -22,11 +23,23 @@ class ScriptGenerator:
         f.write("import random\n\n")
         if TextEntryHandler.DATA["pareto_fronts"]:
             f.write("import pandas as pd\n\n")
-        f.write("from script_gen.chemtools import SmirksGenerator\n\n\n")
+        f.write("from scriptgen.chemtools import SmirksGenerator\n\n\n")
+
+    @staticmethod
+    def write_notes(f):
+        f.write("# <insert mechanism>\n")
+        f.write("# Notes on mechanism:\n")
+        f.write("# [1]\n")
+        f.write("# [2]\n\n")
 
     @staticmethod
     def write_reactant(f, reactant_type):
-        f.write(f"# {reactant_type.upper()}\n")
+        if reactant_type == "source":
+            f.write(f"# Get NUCLEOPHILE SOURCE and substituents in SMILES format\n")
+        elif reactant_type == "sink":
+            f.write(f"# Get ELECTROPHILE SINK and substituents in SMILES format\n")
+        else:
+            raise Exception(f"ScriptGenError: invalid reactant type.")
 
         cores_field = f"{reactant_type}_cores"
         if not TextEntryHandler.DATA[cores_field]:
@@ -47,7 +60,7 @@ class ScriptGenerator:
     @staticmethod
     def write_linkers(f):
         if TextEntryHandler.DATA["linkers"]:
-            f.write("# LINKER\n")
+            f.write("# Get LINKER in SMILES format\n")
             linkers_smiles = ", ".join(f"\"{linker}\"" for linker in TextEntryHandler.DATA["linkers"])
             f.write(f"linkers = [{linkers_smiles}]\n\n")
 
@@ -55,7 +68,7 @@ class ScriptGenerator:
     def write_arrow_pushing(f):
         if not TextEntryHandler.DATA["arrow_pushing"]:
             raise Exception("ScriptGenError: arrow pushing has no value. ")
-        f.write("# ARROW PUSHING\n")
+        f.write("# Get ARROW PUSHING in RP format\n")
         f.write(f"arrow_pushing = \"{TextEntryHandler.DATA["arrow_pushing"]}\"\n\n")
 
     @staticmethod
@@ -63,7 +76,7 @@ class ScriptGenerator:
         if not TextEntryHandler.DATA["pareto_fronts"]:
             return
 
-        f.write("# PARETO FRONT\n")
+        f.write("# Get PARETO FRONT as T/F table\n")
         pareto_fronts = []
         for num, pf in enumerate(TextEntryHandler.DATA["pareto_fronts"]):
             num_tag = f"_{num+1}" if len(TextEntryHandler.DATA["pareto_fronts"]) > 1 else ""
@@ -96,7 +109,7 @@ class ScriptGenerator:
 
     @staticmethod
     def write_smirks(f):
-        f.write("# OUTPUT SMIRKS\n")
+        f.write("# Generate and print SMIRKS\n")
         f.write(f"smirks_gen = SmirksGenerator(source_cores, sink_cores, arrow_pushing,\n\t\t\t ")
 
         for field in ["source_subs", "sink_subs", "linkers"]:

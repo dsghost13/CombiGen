@@ -1,13 +1,13 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QLabel, QPushButton, QScrollArea, QVBoxLayout, QWidget, QMessageBox
 
-from combi_gen.generic_widgets import TextEntryWidget
-from combi_gen.pareto import ParetoWidget
-from combi_gen.reactant import ReactantWidget
+from combigen.generic_widgets import TextEntryWidget
+from combigen.pareto import ParetoWidget
+from combigen.reactant import ReactantWidget
 from config.constants import F, P
 from config.stylesheet import gen_button_ss, scroll_area_ss, section_ss
-from script_gen.data_fields import TextEntryHandler
-from script_gen.script_gen import ScriptGenerator
+from scriptgen.data_fields import TextEntryHandler
+from scriptgen.script_gen import ScriptGenerator
 
 
 class CombiGen(QScrollArea):
