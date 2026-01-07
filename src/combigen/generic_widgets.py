@@ -24,7 +24,8 @@ class TextEntryWidget(QWidget):
 
     def update_field(self):
         text = self.line_edit.text()
-        TextEntryHandler.update_field(self.field, text)
+        if text != "":
+            TextEntryHandler.update_field(self.field, text)
 
 
 class AddButton(QPushButton):

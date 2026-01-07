@@ -14,14 +14,14 @@ class ReactantWidget(QWidget):
         reactant_label = QLabel(reactant_type)
         reactant_label.setSizePolicy(P, F)
 
-        core_widget = CoreWidget(reactant_type)
-        sub_widget = SubstituentWidget(reactant_type)
+        self.core_widget = CoreWidget(reactant_type)
+        self.sub_widget = SubstituentWidget(reactant_type)
 
         reactant_layout = QVBoxLayout()
         reactant_layout.setSpacing(0)
         reactant_layout.addWidget(reactant_label)
-        reactant_layout.addWidget(core_widget)
-        reactant_layout.addWidget(sub_widget)
+        reactant_layout.addWidget(self.core_widget)
+        reactant_layout.addWidget(self.sub_widget)
 
         reactant_widget = QWidget()
         reactant_widget.setLayout(reactant_layout)
@@ -39,10 +39,10 @@ class CoreWidget(QWidget):
         super().__init__()
         self.reactant_type = reactant_type
 
-        core_text_entry = TextEntryWidget("Core(s)", f"{self.reactant_type.lower()}_cores")
+        self.core_text_entry = TextEntryWidget("Core(s)", f"{self.reactant_type.lower()}_cores")
 
         core_layout = QVBoxLayout()
-        core_layout.addWidget(core_text_entry)
+        core_layout.addWidget(self.core_text_entry)
         self.setLayout(core_layout)
 
 
@@ -53,8 +53,8 @@ class SubstituentWidget(QWidget):
 
         sub_label = QLabel("Substituent(s): ")
 
-        add_button = AddButton("Substituent")
-        add_button.clicked.connect(self.add_substituent)
+        self.add_button = AddButton("Substituent")
+        self.add_button.clicked.connect(self.add_substituent)
 
         # substituents
         self.subs_layout = QVBoxLayout()
@@ -68,7 +68,7 @@ class SubstituentWidget(QWidget):
         module_layout = QVBoxLayout()
         module_layout.addWidget(sub_label)
         module_layout.addWidget(subs_widget)
-        module_layout.addWidget(add_button)
+        module_layout.addWidget(self.add_button)
         self.setLayout(module_layout)
 
     def add_substituent(self):

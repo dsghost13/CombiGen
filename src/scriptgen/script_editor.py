@@ -1,8 +1,32 @@
 from PyQt6.Qsci import QsciScintilla
-from PyQt6.QtCore import QFileSystemWatcher
+from PyQt6.QtCore import QFileSystemWatcher, Qt
 from PyQt6.QtGui import QColor, QFont
+from PyQt6.QtWidgets import QPushButton, QVBoxLayout, QWidget
 
-from config.constants import SCRIPT_PATH
+from config.constants import F, SCAN_PATH, SCRIPT_PATH
+from config.stylesheet import gen_button_ss, section_ss
+from scriptgen import script_scan
+
+
+class ScriptGen(QWidget):
+    def __init__(self, combi_gen):
+        super().__init__()
+
+        section_layout = QVBoxLayout()
+        section_layout.addWidget(LoadButton(combi_gen), alignment=Qt.AlignmentFlag.AlignCenter)
+
+        section_widget = QWidget()
+        section_widget.setStyleSheet(section_ss)
+        section_widget.setLayout(section_layout)
+
+        scriptgen_layout = QVBoxLayout()
+        scriptgen_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
+        scriptgen_layout.setContentsMargins(0, 0, 0, 0)
+        scriptgen_layout.setSpacing(0)
+
+        scriptgen_layout.addWidget(section_widget)
+        scriptgen_layout.addWidget(ScriptEditor())
+        self.setLayout(scriptgen_layout)
 
 
 class ScriptEditor(QsciScintilla):
@@ -58,3 +82,64 @@ class ScriptEditor(QsciScintilla):
         if not self._internal_update:
             with open(SCRIPT_PATH, "w", encoding="utf-8") as f:
                 f.write(self.text())
+
+
+class LoadButton(QPushButton):
+    def __init__(self, combi_gen):
+        super().__init__()
+        self.combi_gen = combi_gen
+        self.setFixedHeight(39)
+        self.setFixedWidth(110)
+        self.setSizePolicy(F, F)
+        self.setStyleSheet(gen_button_ss)
+        self.setText(" Load Configs ")
+        self.pressed.connect(self.load_configs)
+
+    def load_configs(self):
+        lines = SCRIPT_PATH.read_text(encoding="utf-8").splitlines()
+        if len(lines) < 22:
+            raise Exception("LoadError: script is empty or does not follow standard format.")
+
+        with open(SCRIPT_PATH, 'r', encoding="utf-8") as f:
+            lines = f.readlines()
+            num_lines = len(lines) - 9
+            lines = lines[:num_lines]
+
+        with open(SCAN_PATH, 'w', encoding="utf-8") as f:
+            f.writelines(lines)
+
+        for name in dir(script_scan):
+            field_value = getattr(script_scan, name)
+
+            match name:
+                case "source_cores":
+                    text = ', '.join(field_value)
+                    self.combi_gen.source_widget.core_widget.core_text_entry.line_edit.setText(text)
+                case "source_subs":
+                    subs = self.combi_gen.source_widget.sub_widget
+                    while subs.subs_layout.count():
+                        subs.subs_layout.itemAt(0).widget().deleteLater()
+                    for i in range(len(field_value)):
+                        text = ', '.join(field_value[i])
+                        subs.add_substituent()
+                        subs.subs_layout.itemAt(i).widget().layout().itemAt(1).widget().setText(text)
+                case "sink_cores":
+                    text = ', '.join(field_value)
+                    self.combi_gen.sink_widget.core_widget.core_text_entry.line_edit.setText(text)
+                case "sink_subs":
+                    subs = self.combi_gen.source_widget.sub_widget
+                    while subs.subs_layout.count():
+                        subs.subs_layout.itemAt(0).widget().deleteLater()
+                    for i in range(len(field_value)):
+                        text = ', '.join(field_value[i])
+                        subs.add_substituent()
+                        subs.subs_layout.itemAt(i).widget().layout().itemAt(1).widget().setText(text)
+                case "linkers":
+                    text = ', '.join(field_value)
+                    self.combi_gen.linker_widget.linker_text_entry.line_edit.setText(text)
+                case "arrow_pushing":
+                    self.combi_gen.arrow_pushing_widget.arrow_pushing_text_entry.line_edit.setText(field_value)
+                case "pareto_fronts":
+                    pass
+                case _:
+                    pass

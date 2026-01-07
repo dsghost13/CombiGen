@@ -12,6 +12,7 @@ PROJECT_DIR = Path(__file__).resolve().parents[2]
 SCRIPT_PATH = PROJECT_DIR / "script.py"
 TXT_PATH = PROJECT_DIR / "output.txt"
 CSV_PATH = PROJECT_DIR / "output.csv"
+SCAN_PATH = PROJECT_DIR / "src" / "scriptgen" / "script_scan.py"
 
 # colors
 COLORS = {

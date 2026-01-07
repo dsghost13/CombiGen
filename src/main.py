@@ -6,8 +6,8 @@ from PyQt6.QtWidgets import QApplication, QHBoxLayout, QMainWindow, QTabWidget, 
 
 from config.constants import E
 from combigen.main_ui import CombiGen
-from outgen.output import OutputGenerator
-from scriptgen.script_editor import ScriptEditor
+from outgen.output import OutputGen
+from scriptgen.script_editor import ScriptGen
 
 
 class MainWindow(QMainWindow):
@@ -33,9 +33,10 @@ def get_tab_widget():
     tabs.setSizePolicy(E, E)
     tabs.setTabPosition(QTabWidget.TabPosition.North)
 
-    tabs.addTab(CombiGen(), "CombiGen")
-    tabs.addTab(ScriptEditor(), "Script Editor")
-    tabs.addTab(OutputGenerator(), "Output SMIRKS")
+    combi_gen = CombiGen()
+    tabs.addTab(combi_gen, "CombiGen")
+    tabs.addTab(ScriptGen(combi_gen), "Script Editor")
+    tabs.addTab(OutputGen(), "Output SMIRKS")
     return tabs
 
 

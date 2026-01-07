@@ -46,12 +46,3 @@ pareto_data = [
 pareto_front = pd.DataFrame(pareto_data, index=pareto_rows, columns=pareto_columns)
 
 pareto_fronts = [pareto_front]
-
-# Generate and print SMIRKS
-smirks_gen = SmirksGenerator(source_cores, sink_cores, arrow_pushing,
-			 source_subs=None, sink_subs=sink_subs, linkers=None, pareto_fronts=pareto_fronts)
-smirks_list = smirks_gen.generate_smirks()
-for smirks in smirks_list:
-	if random.random() < 0.05:
-		print(smirks)
-print(str(len(smirks_list)) + " Total SMIRKS")

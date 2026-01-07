@@ -19,11 +19,17 @@ class CombiGen(QScrollArea):
         combigen_layout.setContentsMargins(0, 0, 0, 0)
         combigen_layout.setSpacing(0)
 
-        combigen_layout.addWidget(ReactantWidget("SOURCE"))
-        combigen_layout.addWidget(ReactantWidget("SINK"))
-        combigen_layout.addWidget(LinkerWidget())
-        combigen_layout.addWidget(ArrowPushingWidget())
-        combigen_layout.addWidget(ParetoWidget())
+        self.source_widget = ReactantWidget("SOURCE")
+        self.sink_widget = ReactantWidget("SINK")
+        self.linker_widget = LinkerWidget()
+        self.arrow_pushing_widget = ArrowPushingWidget()
+        self.pareto_widget = ParetoWidget()
+
+        combigen_layout.addWidget(self.source_widget)
+        combigen_layout.addWidget(self.sink_widget)
+        combigen_layout.addWidget(self.linker_widget)
+        combigen_layout.addWidget(self.arrow_pushing_widget)
+        combigen_layout.addWidget(self.pareto_widget)
         combigen_layout.addWidget(GenerateButton())
 
         combigen_widget = QWidget()
@@ -41,11 +47,11 @@ class LinkerWidget(QWidget):
         linker_label = QLabel("LINKER")
         linker_label.setSizePolicy(P, F)
 
-        linker_text_entry = TextEntryWidget("Linker(s)", "linkers")
+        self.linker_text_entry = TextEntryWidget("Linker(s)", "linkers")
 
         linker_layout = QVBoxLayout()
         linker_layout.addWidget(linker_label)
-        linker_layout.addWidget(linker_text_entry)
+        linker_layout.addWidget(self.linker_text_entry)
 
         linker_widget = QWidget()
         linker_widget.setLayout(linker_layout)
@@ -63,11 +69,11 @@ class ArrowPushingWidget(QWidget):
         arrow_pushing_label = QLabel("ARROW PUSHING")
         arrow_pushing_label.setSizePolicy(P, F)
 
-        arrow_pushing_text_entry = TextEntryWidget("Arrow Pushing", "arrow_pushing")
+        self.arrow_pushing_text_entry = TextEntryWidget("Arrow Pushing", "arrow_pushing")
 
         arrow_pushing_layout = QVBoxLayout()
         arrow_pushing_layout.addWidget(arrow_pushing_label)
-        arrow_pushing_layout.addWidget(arrow_pushing_text_entry)
+        arrow_pushing_layout.addWidget(self.arrow_pushing_text_entry)
 
         arrow_pushing_widget = QWidget()
         arrow_pushing_widget.setLayout(arrow_pushing_layout)

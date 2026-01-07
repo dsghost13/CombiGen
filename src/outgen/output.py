@@ -12,7 +12,7 @@ from config.stylesheet import gen_button_ss, section_ss, terminal_ss
 from scriptgen.data_fields import TextEntryHandler
 
 
-class OutputGenerator(QWidget):
+class OutputGen(QWidget):
     def __init__(self):
         super().__init__()
 
