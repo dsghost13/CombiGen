@@ -29,14 +29,14 @@ arrow_pushing = "10=20;20,21=21"
 pareto_rows = ["c7ccccc7[*:201]", "C/C=C/[*:201]", "CC/C=C/[*:201]", "N#C[*:201]", "CC#C[*:201]", "CCC#C[*:201]", "O=C([*:201])c1ccccc1", "CC(=O)[*:201]", "CCC(=O)[*:201]", "C[*:201]", "CC[*:201]", "CCC[*:201]", "[H][*:201]"]
 pareto_columns = ["O=S(=O)([O:21][*:211])C(F)(F)F", "Cc1ccc(S(=O)(=O)[O:21][*:211])cc1", "CS(=O)(=O)[O:21][*:211]", "[Cl:21][*:211]"]
 pareto_data = [
-	[False, True, True, True],
-	[True, True, False, True],
 	[True, True, True, True],
-	[True, False, True, True],
-	[True, False, True, True],
-	[False, True, True, True],
-	[True, True, True, False],
-	[False, True, False, True],
+	[True, True, True, True],
+	[True, True, True, True],
+	[True, True, True, True],
+	[True, True, True, True],
+	[True, True, True, True],
+	[True, True, True, True],
+	[True, True, True, True],
 	[True, True, True, True],
 	[True, False, False, False],
 	[True, False, False, False],

@@ -98,7 +98,6 @@ class AxisDropdown(QWidget):
         axis_layout.setAlignment(Qt.AlignmentFlag.AlignLeft)
         axis_layout.addWidget(axis_label)
         axis_layout.addWidget(self.dropdown)
-
         self.setLayout(axis_layout)
 
 

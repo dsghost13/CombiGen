@@ -24,8 +24,8 @@ class ScriptGen(QWidget):
         scriptgen_layout.setContentsMargins(0, 0, 0, 0)
         scriptgen_layout.setSpacing(0)
 
-        scriptgen_layout.addWidget(section_widget)
         scriptgen_layout.addWidget(ScriptEditor())
+        scriptgen_layout.addWidget(section_widget)
         self.setLayout(scriptgen_layout)
 
 
@@ -57,7 +57,8 @@ class ScriptEditor(QsciScintilla):
         self.setMatchedBraceBackgroundColor(QColor("#888888"))
         self.setMatchedBraceForegroundColor(QColor("#FFFFFF"))
 
-        self._internal_update = False
+        self.internal_update = False
+        self.setEolMode(QsciScintilla.EolMode.EolUnix)
 
         self.load_file()
         self.watcher = QFileSystemWatcher([str(SCRIPT_PATH)])
@@ -65,21 +66,21 @@ class ScriptEditor(QsciScintilla):
         self.textChanged.connect(self.text_changed)
 
     def load_file(self):
-        self._internal_update = True
+        self.internal_update = True
         line, index = self.getCursorPosition()
         with open(SCRIPT_PATH, "r", encoding="utf-8") as f:
             self.setText(f.read())
         self.setCursorPosition(line, index)
-        self._internal_update = False
+        self.internal_update = False
 
     def file_changed(self, path):
-        if not self._internal_update:
+        if not self.internal_update:
             self.load_file()
         if path not in self.watcher.files():
             self.watcher.addPath(path)
 
     def text_changed(self):
-        if not self._internal_update:
+        if not self.internal_update:
             with open(SCRIPT_PATH, "w", encoding="utf-8") as f:
                 f.write(self.text())
 
@@ -108,9 +109,7 @@ class LoadButton(QPushButton):
         with open(SCAN_PATH, 'w', encoding="utf-8") as f:
             f.writelines(lines)
 
-        for name in dir(script_scan):
-            field_value = getattr(script_scan, name)
-
+        for name, field_value in vars(script_scan).items():
             match name:
                 case "source_cores":
                     text = ', '.join(field_value)
@@ -127,7 +126,7 @@ class LoadButton(QPushButton):
                     text = ', '.join(field_value)
                     self.combi_gen.sink_widget.core_widget.core_text_entry.line_edit.setText(text)
                 case "sink_subs":
-                    subs = self.combi_gen.source_widget.sub_widget
+                    subs = self.combi_gen.sink_widget.sub_widget
                     while subs.subs_layout.count():
                         subs.subs_layout.itemAt(0).widget().deleteLater()
                     for i in range(len(field_value)):
@@ -140,6 +139,31 @@ class LoadButton(QPushButton):
                 case "arrow_pushing":
                     self.combi_gen.arrow_pushing_widget.arrow_pushing_text_entry.line_edit.setText(field_value)
                 case "pareto_fronts":
-                    pass
+                    try:
+                        pfs = self.combi_gen.pareto_widget
+                        while pfs.paretos_layout.count():
+                            pfs.paretos_layout.itemAt(0).widget().deleteLater()
+                        for i in range(len(field_value)):
+                            pfs.add_pareto_front()
+                            table = pfs.paretos_layout.itemAt(i).widget().layout().itemAt(2).widget().layout().itemAt(1).widget()
+
+                            row_subs = ", ".join(field_value[i].index.astype(str))
+                            col_subs = ", ".join(field_value[i].columns.astype(str))
+                            table.row_select.update_dropdown()
+                            table.col_select.update_dropdown()
+                            row_idx = table.row_select.findText(row_subs)
+                            col_idx = table.col_select.findText(col_subs)
+                            if (row_idx != -1) and (col_idx != -1):
+                                table.row_select.setCurrentIndex(row_idx)
+                                table.col_select.setCurrentIndex(col_idx)
+                            table.update_table()
+
+                            for r, row_label in enumerate(field_value[i].index):
+                                for c, col_label in enumerate(field_value[i].columns):
+                                    truth_value = bool(field_value[i].at[row_label, col_label])
+                                    cell_button = table.table_layout.itemAtPosition(r+1, c+1).widget()
+                                    cell_button.setChecked(truth_value)
+                    except Exception as e:
+                        print(e)
                 case _:
                     pass
