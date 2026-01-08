@@ -10,5 +10,5 @@ Run the following commands in the terminal:
 The listed package versions are the last confirmed working versions. <br>
 Use other versions at your own discretion. 
 
-### Google Colab Template Script: 
+### Google Colab Template Script
     https://colab.research.google.com/drive/1aM069_xXhUgoOAZ5gK61LJIyEz0_YTkj?usp=sharing
