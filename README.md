@@ -19,7 +19,7 @@ Whitespace, newline characters, and tab characters are automatically filtered ou
 Cores and arrow pushing cannot be left blank. <br>
 All other fields may be left blank. <br>
 Toggle pareto front cells by clicking or dragging your mouse. <br>
-NOTE: Executing with unconventional values may result in undefined behavior. <br>
+NOTE: Executing with incompatible values may result in undefined behavior. <br>
 #### Script Editor
 An example script is provided in the code editor. <br>
 You may paste in your own pre-existing script. <br>
