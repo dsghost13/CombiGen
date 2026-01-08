@@ -12,6 +12,7 @@ The listed package versions are the last confirmed working versions. <br>
 Use other versions at your own discretion. 
 
 ### Usage Specifications
+Launch the GUI by running **src/main.py**.
 #### CombiGen
 Text entries may contain quotations (e.g. "CCC(O)CN") or not (e.g. CCC(O)CN). <br>
 Text entries must be comma-separated when applicable (e.g. CC(C)\[NH2:10], CC(C)(C)\[NH2:10], \[NH2:10]C1CCCCC1). <br>
@@ -19,6 +20,7 @@ Whitespace, newline characters, and tab characters are automatically filtered ou
 Cores and arrow pushing cannot be left blank. <br>
 All other fields may be left blank. <br>
 Toggle pareto front cells by clicking or dragging your mouse. <br>
+Generated scripts will be saved in **script.py**. <br>
 NOTE: Executing with incompatible values may result in undefined behavior. <br>
 #### Script Editor
 An example script is provided in the code editor. <br>
