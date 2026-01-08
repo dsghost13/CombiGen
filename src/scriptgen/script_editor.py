@@ -117,7 +117,7 @@ class LoadButton(QPushButton):
                 case "source_subs":
                     subs = self.combi_gen.source_widget.sub_widget
                     while subs.subs_layout.count():
-                        subs.subs_layout.itemAt(0).widget().deleteLater()
+                        subs.subs_layout.takeAt(0).widget().deleteLater()
                     for i in range(len(field_value)):
                         text = ', '.join(field_value[i])
                         subs.add_substituent()
@@ -128,7 +128,7 @@ class LoadButton(QPushButton):
                 case "sink_subs":
                     subs = self.combi_gen.sink_widget.sub_widget
                     while subs.subs_layout.count():
-                        subs.subs_layout.itemAt(0).widget().deleteLater()
+                        subs.subs_layout.takeAt(0).widget().deleteLater()
                     for i in range(len(field_value)):
                         text = ', '.join(field_value[i])
                         subs.add_substituent()
@@ -139,31 +139,28 @@ class LoadButton(QPushButton):
                 case "arrow_pushing":
                     self.combi_gen.arrow_pushing_widget.arrow_pushing_text_entry.line_edit.setText(field_value)
                 case "pareto_fronts":
-                    try:
-                        pfs = self.combi_gen.pareto_widget
-                        while pfs.paretos_layout.count():
-                            pfs.paretos_layout.itemAt(0).widget().deleteLater()
-                        for i in range(len(field_value)):
-                            pfs.add_pareto_front()
-                            table = pfs.paretos_layout.itemAt(i).widget().layout().itemAt(2).widget().layout().itemAt(1).widget()
+                    pfs = self.combi_gen.pareto_widget
+                    while pfs.paretos_layout.count():
+                        pfs.paretos_layout.takeAt(0).widget().deleteLater()
+                    for i in range(len(field_value)):
+                        pfs.add_pareto_front()
+                        table = pfs.paretos_layout.itemAt(i).widget().layout().itemAt(2).widget().layout().itemAt(1).widget()
 
-                            row_subs = ", ".join(field_value[i].index.astype(str))
-                            col_subs = ", ".join(field_value[i].columns.astype(str))
-                            table.row_select.update_dropdown()
-                            table.col_select.update_dropdown()
-                            row_idx = table.row_select.findText(row_subs)
-                            col_idx = table.col_select.findText(col_subs)
-                            if (row_idx != -1) and (col_idx != -1):
-                                table.row_select.setCurrentIndex(row_idx)
-                                table.col_select.setCurrentIndex(col_idx)
-                            table.update_table()
+                        row_subs = ", ".join(field_value[i].index.astype(str))
+                        col_subs = ", ".join(field_value[i].columns.astype(str))
+                        table.row_select.update_dropdown()
+                        table.col_select.update_dropdown()
+                        row_idx = table.row_select.findText(row_subs)
+                        col_idx = table.col_select.findText(col_subs)
+                        if (row_idx != -1) and (col_idx != -1):
+                            table.row_select.setCurrentIndex(row_idx)
+                            table.col_select.setCurrentIndex(col_idx)
+                        table.update_table()
 
-                            for r, row_label in enumerate(field_value[i].index):
-                                for c, col_label in enumerate(field_value[i].columns):
-                                    truth_value = bool(field_value[i].at[row_label, col_label])
-                                    cell_button = table.table_layout.itemAtPosition(r+1, c+1).widget()
-                                    cell_button.setChecked(truth_value)
-                    except Exception as e:
-                        print(e)
+                        for r, row_label in enumerate(field_value[i].index):
+                            for c, col_label in enumerate(field_value[i].columns):
+                                truth_value = bool(field_value[i].at[row_label, col_label])
+                                cell_button = table.table_layout.itemAtPosition(r+1, c+1).widget()
+                                cell_button.setChecked(truth_value)
                 case _:
                     pass

@@ -204,8 +204,21 @@ class DropdownBox(QComboBox):
     def update_dropdown(self):
         pareto_options = TextEntryHandler.RAW["source_subs"] + TextEntryHandler.RAW["sink_subs"]
         pareto_options = [''] if len(pareto_options) == 0 else pareto_options
-        self.clear()
-        self.addItems(pareto_options)
+
+        current_text = self.currentText()
+        current_items = [self.itemText(i) for i in range(self.count())]
+        if current_items != pareto_options:
+            self.clear()
+            self.addItems(pareto_options)
+
+            index = self.findText(current_text)
+            if index != -1:
+                self.setCurrentIndex(index)
+            else:
+                self.setCurrentIndex(-1)
+
+    def wheelEvent(self, event):
+        event.ignore()
 
 
 class CellButton(QPushButton):
