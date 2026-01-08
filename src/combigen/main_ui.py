@@ -111,7 +111,11 @@ class GenerateButton(QWidget):
         if not TextEntryHandler.DATA["arrow_pushing"]:
             WarningMessageBox("Arrow pushing not found!").exec()
             return
-        ScriptGenerator.generate_script()
+
+        try:
+            ScriptGenerator.generate_script()
+        except Exception as e:
+            print(e)
 
 
 class WarningMessageBox(QMessageBox):

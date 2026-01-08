@@ -52,31 +52,33 @@ class RunButton(QPushButton):
         self.pressed.connect(self.run_script)
 
     def run_script(self):
-        lines = SCRIPT_PATH.read_text(encoding="utf-8").splitlines()
-        if len(lines) < 22:
-            return
+        try:
+            lines = SCRIPT_PATH.read_text(encoding="utf-8").splitlines()
+            if len(lines) < 22:
+                return
 
-        lines[-3] = f"\tif random.random() <= 1:"
-        SCRIPT_PATH.write_text("\n".join(lines), encoding="utf-8")
-        output = subprocess.run(["python", SCRIPT_PATH], capture_output=True, text=True)
-        output_lines = output.stdout.splitlines()
+            lines[-3] = f"\tif random.random() <= 1:"
+            SCRIPT_PATH.write_text("\n".join(lines), encoding="utf-8")
+            output = subprocess.run(["python", SCRIPT_PATH], capture_output=True, text=True)
+            output_lines = output.stdout.splitlines()
 
-        with open(CSV_PATH, "w", encoding="utf-8", newline="") as f:
-            writer = csv.writer(f)
-            writer.writerow(["SMILES Labelled"])
-            for line in output_lines[:-1]:
-                writer.writerow([line])
+            with open(CSV_PATH, "w", encoding="utf-8", newline="") as f:
+                writer = csv.writer(f)
+                writer.writerow(["SMILES Labelled"])
+                for line in output_lines[:-1]:
+                    writer.writerow([line])
 
-        output_proportion = TextEntryHandler.DATA["output_proportion"]
-        selected = [line for line in output_lines if random.random() < output_proportion]
-        with open(TXT_PATH, "w", encoding="utf-8") as f:
-            f.writelines(f"{line}\n" for line in selected)
-            f.write(output_lines[-1])
-            f.write(output.stderr)
+            output_proportion = TextEntryHandler.DATA["output_proportion"]
+            selected = [line for line in output_lines if random.random() < output_proportion]
+            with open(TXT_PATH, "w", encoding="utf-8") as f:
+                f.writelines(f"{line}\n" for line in selected)
+                f.write(output_lines[-1])
+                f.write(output.stderr)
 
-        lines[-3] = f"\tif random.random() < {output_proportion}:"
-        SCRIPT_PATH.write_text("\n".join(lines), encoding="utf-8")
-
+            lines[-3] = f"\tif random.random() < {output_proportion}:"
+            SCRIPT_PATH.write_text("\n".join(lines), encoding="utf-8")
+        except Exception as e:
+            print(e)
 
 class OutputTerminal(QWidget):
     def __init__(self):
