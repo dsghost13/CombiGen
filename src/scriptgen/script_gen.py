@@ -69,7 +69,7 @@ class ScriptGenerator:
         if not TextEntryHandler.DATA["arrow_pushing"]:
             raise Exception("ScriptGenError: arrow pushing has no value. ")
         f.write("# Get ARROW PUSHING in RP format\n")
-        f.write(f"arrow_pushing = \"{TextEntryHandler.DATA["arrow_pushing"]}\"\n\n")
+        f.write(f"arrow_pushing = \"{TextEntryHandler.DATA['arrow_pushing']}\"\n\n")
 
     @staticmethod
     def write_pareto_fronts(f):
@@ -125,6 +125,6 @@ class ScriptGenerator:
 
         f.write("smirks_list = smirks_gen.generate_smirks()\n")
         f.write("for smirks in smirks_list:\n")
-        f.write(f"\tif random.random() < {TextEntryHandler.DATA["output_proportion"]}:\n")
+        f.write(f"\tif random.random() < {TextEntryHandler.DATA['output_proportion']}:\n")
         f.write("\t\tprint(smirks)\n")
         f.write("print(str(len(smirks_list)) + \" Total SMIRKS\")")
