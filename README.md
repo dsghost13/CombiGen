@@ -16,7 +16,7 @@ Use other versions at your own discretion.
 Text entries may contain quotations (e.g. "CCC(O)CN") or not (e.g. CCC(O)CN). <br>
 Text entries must be comma-separated when applicable (e.g. CC(C)\[NH2:10], CC(C)(C)\[NH2:10], \[NH2:10]C1CCCCC1). <br>
 Whitespace, newline characters, and tab characters are automatically filtered out. <br>
-Cores and arrow pushing cannot be left blank. <
+Cores and arrow pushing cannot be left blank. <br>
 All other fields may be left blank. <br>
 Toggle pareto front cells by clicking or dragging your mouse. <br>
 NOTE: Executing with unconventional values may result in undefined behavior. <br>
