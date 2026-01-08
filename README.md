@@ -29,7 +29,7 @@ Press "Load Configs" to autofill CombiGen fields by extracting values from the c
 NOTE: Scripts that do not follow the generated format may result in undefined behavior. <br>
 #### Output SMIRKS
 Output proportion should fall between 0 and 1 inclusive. <br>
-Generated SMIRKS are saved in a CSV file. <br>
+Generated SMIRKS are saved in **output.csv**. <br>
 SMIRKS strings can be depicted at the following website:
 ```
 https://cdb.ics.uci.edu/cgibin/Smi2DepictWeb.py
