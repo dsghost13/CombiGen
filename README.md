@@ -4,6 +4,7 @@
 Run the following commands in the terminal:
 ```bash
     conda create -n CombiGen python=3.11
+    conda activate CombiGen
     pip install pyqt6==6.10.1 pyqt6-qscintilla==2.14.1 pyqtdarktheme==0.1.7
     pip install pandas==2.3.3 rdkit==2025.9.3
 ```
