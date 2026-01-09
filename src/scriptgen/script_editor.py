@@ -5,7 +5,6 @@ from PyQt6.QtWidgets import QPushButton, QVBoxLayout, QWidget
 
 from config.constants import F, SCAN_PATH, SCRIPT_PATH
 from config.stylesheet import gen_button_ss, section_ss
-from scriptgen import script_scan
 
 
 class ScriptGen(QWidget):
@@ -110,6 +109,7 @@ class LoadButton(QPushButton):
             with open(SCAN_PATH, 'w', encoding="utf-8") as f:
                 f.writelines(lines)
 
+            from scriptgen import script_scan
             for name, field_value in vars(script_scan).items():
                 match name:
                     case "source_cores":
